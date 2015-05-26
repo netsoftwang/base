@@ -21,29 +21,7 @@ public class BaseDao {
 		return jdbcTemplate.queryForMap(sql, args);
 	}
 	
-	public String  geneSql(Object ...args){
-		if(args.length>0){
-			StringBuilder sb=new StringBuilder();
-			for(int i=0;i<args.length;i++){
-				Object obj=args[i];
-				if(obj ==null){
-					return "error";
-				}else{
-					if(obj instanceof String || obj instanceof Character){
-						sb.append("'"+obj+"'");
-					}else if(obj instanceof Boolean){
-						if(((boolean)obj)==true)
-							sb.append(1);
-						else 
-							sb.append(0);
-					}else {
-						sb.append(obj);
-					}
-				}
-			}
-		}
-		return null;
-	}
+
 	public void insert(String sql,Object ...args){
 		DataSource ds= jdbcTemplate.getDataSource();
 		Connection con;

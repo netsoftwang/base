@@ -1,27 +1,34 @@
 package com.palace.seeds.model;
 
-/*id  BIGINT UNSIGNED NOT NULL auto_increment COMMENT 'Ö÷¼üid',
-entId BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '¸Ä×Ö¶ÎËùÊôÆóÒµ',
-name VARCHAR(32) NOT NULL COMMENT '×Ö¶ÎÔÚÁĞÖĞÏÔÊ¾µÄÖĞÎÄÃû³Æ',
-field VARCHAR(32) NOT NULL COMMENT 'ÔÚÊı¾İ¿âÖĞ±£´æµÄ×Ö¶ÎÃû³Æ',
-type VARCHAR (32) NOT NULL DEFAULT 'strType' COMMENT '×Ö¶ÎÀàĞÍ',
-viewNum TINYINT  DEFAULT 0 COMMENT '¸Ã×Ö¶ÎÔÚÁĞ±íÖĞÏÔÊ¾µÄË³Ğò',
-isShow  TINYINT DEFAULT 1 COMMENT 'ÊÇ·ñÔÚÁĞ±íÖĞÏÔÊ¾',
-width TINYINT  DEFAULT 0 COMMENT '¸Ä×Ö¶ÎÔÚÁĞ±íÖĞÏÔÊ¾µÄ¿í¶È',
-isSearch TINYINT DEFAULT 0 COMMENT '¸Ã×Ö¶ÎÊÇ·ñÓÃÓÚËÑË÷,0£º¹Ø±Õ£¬1£ºÆôÓÃ',
-searchGroupId BIGINT UNSIGNED DEFAULT 0 COMMENT 'Èç¹û¸Ã×Ö¶Î¿ÉÒÔÓÃÀ´ËÑË÷£¬ÇÒÊôÓÚÒ»¸öËÑË÷×é£¬Ôò×Ö¶Î±íÊ¾ËÑË÷×éid',
-isMutiValSerch TINYINT DEFAULT 0 COMMENT 'ÊÇ·ñ¿ªÆô¶àÖµËÑË÷£¬¼´ËÑË÷Ê±ÊÇ·ñ³öÈë¶à¸öÖµ,Èç¹û¿ªÆôÓĞÈı¸öÖµ£¬Ôò²ÎÊıĞÎÊ½ field1="val1",field2="val2",0£º¹Ø±Õ£¬1£ºÆôÓÃ',
-regexpForm VARCHAR(125) DEFAULT '' COMMENT '¸Ä×Ö¶ÎµÄÕıÔò±í´ïÊ½',
-viewNumForm TINYINT DEFAULT 0 COMMENT '¸Ã×Ö¶ÎÔÚ±à¼­¿òÖĞÏÔÊ¾µÄË³Ğò',
-isShowForm TINYINT DEFAULT 1 COMMENT 'ÊÇ·ñÔÚ±íµ¥ÖĞÏÔÊ¾0£º¹Ø±Õ£¬1£º¿ªÆô',
-isEditForm TINYINT DEFAULT 1 COMMENT 'ÔÚ±íµ¥ÖĞÊÇ·ñ¿ÉÒÔ±à¼­0:¹Ø±Õ£¬1£º¿ªÆô',
-formTypeForm VARCHAR(32) DEFAULT 'text' COMMENT '±íµ¥ÀàĞÍ',
-groupIdFormId	BIGINT UNSIGNED DEFAULT 0 COMMENT 'ÔÚ±íµ¥ÖĞÈç¹û½øĞĞ·Ö×éµÄ»°£¬±íÊ¾±¾×Ö¶ÎËùÊôµÄ×é',
-optionKV VARCHAR(32) DEFAULT '' COMMENT 'Èç¹û¸Ã×Ö¶ÎÊÇÏÂÀ­ÁĞ±í£¬Ôò¸ÄÁĞ´ú±íÏÂÀ­ÁĞ±íÖĞµÄÖµ,²ÎÊıĞÎÊ½Îª£ºkey1:val1,key2:val2',
-theClass  VARCHAR(32) DEFAULT '' COMMENT 'ÏÔÊ¾µÄÑùÊ½',
-funcs VARCHAR(32) DEFAULT '' COMMENT '¸Ã×Ö¶ÎµÄº¯Êı´¦Àí',
-action VARCHAR(64) DEFAULT '' COMMENT 'È¨ÏŞ¿ØÖÆ´úÂë',
-PRIMARY KEY (id)*/
+/*DROP TABLE IF EXISTS seeds.cusField;
+CREATE TABLE seeds.cusField(
+id  BIGINT UNSIGNED NOT NULL auto_increment COMMENT 'ä¸»é”®id',
+entId BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'æ”¹å­—æ®µæ‰€å±ä¼ä¸š',
+name VARCHAR(32) NOT NULL COMMENT 'å­—æ®µåœ¨åˆ—ä¸­æ˜¾ç¤ºçš„ä¸­æ–‡åç§°',
+field VARCHAR(32) NOT NULL COMMENT 'åœ¨æ•°æ®åº“ä¸­ä¿å­˜çš„å­—æ®µåç§°',
+type VARCHAR (32) NOT NULL DEFAULT 'strType' COMMENT 'å­—æ®µç±»å‹',
+tableName VARCHAR(32) NOT NULL COMMENT 'è¡¨åç§°',
+viewNum TINYINT  DEFAULT 0 COMMENT 'è¯¥å­—æ®µåœ¨åˆ—è¡¨ä¸­æ˜¾ç¤ºçš„é¡ºåº',
+status TINYINT DEFAULT 0 COMMENT 'å­—æ®µçš„çŠ¶æ€ï¼Œ0ï¼šå†ç”¨ï¼Œ1ï¼šå…³é—­ï¼Œ',
+isShow  TINYINT DEFAULT 1 COMMENT 'æ˜¯å¦åœ¨åˆ—è¡¨ä¸­æ˜¾ç¤º',
+width TINYINT  DEFAULT 0 COMMENT 'æ”¹å­—æ®µåœ¨åˆ—è¡¨ä¸­æ˜¾ç¤ºçš„å®½åº¦',
+isUse TINYINT DEFAULT 1 COMMENT 'æ˜¯å¦åœ¨ç”¨',
+isSearch TINYINT DEFAULT 0 COMMENT 'è¯¥å­—æ®µæ˜¯å¦ç”¨äºæœç´¢,0ï¼šå…³é—­ï¼Œ1ï¼šå¯ç”¨',
+searchGroupId BIGINT UNSIGNED DEFAULT 0 COMMENT 'å¦‚æœè¯¥å­—æ®µå¯ä»¥ç”¨æ¥æœç´¢ï¼Œä¸”å±äºä¸€ä¸ªæœç´¢ç»„ï¼Œåˆ™å­—æ®µè¡¨ç¤ºæœç´¢ç»„id',
+isMutiValSerch TINYINT DEFAULT 0 COMMENT 'æ˜¯å¦å¼€å¯å¤šå€¼æœç´¢ï¼Œå³æœç´¢æ—¶æ˜¯å¦å‡ºå…¥å¤šä¸ªå€¼,å¦‚æœå¼€å¯æœ‰ä¸‰ä¸ªå€¼ï¼Œåˆ™å‚æ•°å½¢å¼ field1="val1",field2="val2",0ï¼šå…³é—­ï¼Œ1ï¼šå¯ç”¨',
+regexpForm VARCHAR(125) DEFAULT '' COMMENT 'æ”¹å­—æ®µçš„æ­£åˆ™è¡¨è¾¾å¼',
+viewNumForm TINYINT DEFAULT 0 COMMENT 'è¯¥å­—æ®µåœ¨ç¼–è¾‘æ¡†ä¸­æ˜¾ç¤ºçš„é¡ºåº',
+isShowForm TINYINT DEFAULT 1 COMMENT 'æ˜¯å¦åœ¨è¡¨å•ä¸­æ˜¾ç¤º0ï¼šå…³é—­ï¼Œ1ï¼šå¼€å¯',
+isEditForm TINYINT DEFAULT 1 COMMENT 'åœ¨è¡¨å•ä¸­æ˜¯å¦å¯ä»¥ç¼–è¾‘0:å…³é—­ï¼Œ1ï¼šå¼€å¯',
+formTypeForm VARCHAR(32) DEFAULT 'text' COMMENT 'è¡¨å•ç±»å‹',
+groupIdFormId	BIGINT UNSIGNED DEFAULT 0 COMMENT 'åœ¨è¡¨å•ä¸­å¦‚æœè¿›è¡Œåˆ†ç»„çš„è¯ï¼Œè¡¨ç¤ºæœ¬å­—æ®µæ‰€å±çš„ç»„',
+optionKV VARCHAR(32) DEFAULT '' COMMENT 'å¦‚æœè¯¥å­—æ®µæ˜¯ä¸‹æ‹‰åˆ—è¡¨ï¼Œåˆ™æ”¹åˆ—ä»£è¡¨ä¸‹æ‹‰åˆ—è¡¨ä¸­çš„å€¼,å‚æ•°å½¢å¼ä¸ºï¼škey1:val1,key2:val2',
+theClass  VARCHAR(32) DEFAULT '' COMMENT 'æ˜¾ç¤ºçš„æ ·å¼',
+funcs VARCHAR(32) DEFAULT '' COMMENT 'è¯¥å­—æ®µçš„å‡½æ•°å¤„ç†',
+action VARCHAR(64) DEFAULT '' COMMENT 'æƒé™æ§åˆ¶ä»£ç ',
+createTime int DEFAULT 0 COMMENT 'åˆ›å»ºæ—¶é—´',
+PRIMARY KEY (id)
+)ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;*/
 public class CusField {
 
 	private Long id;
@@ -29,7 +36,9 @@ public class CusField {
 	private String name;
 	private String field;
 	private String type;
+	private String tableName;
 	private Integer viewNum;
+	private Integer status;
 	private Integer isUse;
 	private Integer isShow;
 	private Integer width;
@@ -46,9 +55,15 @@ public class CusField {
 	private String  theClass;
 	private String funcs;
 	private String action;
+	private Long createTime;
 	
 	
-	
+	public String getTableName() {
+		return tableName;
+	}
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -180,6 +195,18 @@ public class CusField {
 	}
 	public void setIsUse(Integer isUse) {
 		this.isUse = isUse;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public Long getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Long createTime) {
+		this.createTime = createTime;
 	} 
 	
 	

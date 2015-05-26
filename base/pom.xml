@@ -2,13 +2,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.palace.seeds</groupId>
 	<artifactId>base</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>  
+	<version>0.0.1-SNAPSHOT</version>  
   
   
-	<modules>
+<!-- 	<modules>
 		 <module>simple</module>
-	</modules>
+	</modules> -->
 	<dependencies>
 	    <dependency>
 	        <groupId>org.springframework</groupId>
@@ -28,6 +27,11 @@
 	   	<dependency>
 	        <groupId>org.springframework</groupId>
 	        <artifactId>spring-web</artifactId>
+	        <version>4.1.6.RELEASE</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-context-support</artifactId>
 	        <version>4.1.6.RELEASE</version>
 	    </dependency>
 	    <dependency>
@@ -58,4 +62,5 @@
       </snapshots>
     </repository>
   </repositories>
+	<packaging>war</packaging>
 </project>
