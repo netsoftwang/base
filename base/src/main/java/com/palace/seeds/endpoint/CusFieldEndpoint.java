@@ -15,7 +15,6 @@ import com.palace.seeds.service.ICusFieldService;
 @Controller
 @RequestMapping("cusField")
 public class CusFieldEndpoint {
-
 	@Autowired
 	private ICusFieldService  cusFieldService;
 	@RequestMapping("getCusFieldPage")
