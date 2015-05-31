@@ -1,8 +1,8 @@
-package com.palace.seeds.dao;
+package com.palace.seeds.service;
 
 import java.util.Map;
 
-public interface ICusFieldDao {
+public interface ICusFieldService {
 
 	Map getPage(Map<String, Object> params);
 

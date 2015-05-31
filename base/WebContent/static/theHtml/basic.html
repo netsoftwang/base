@@ -3,18 +3,15 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Basic Accordion - jQuery EasyUI Demo</title>
-	<link rel="stylesheet" type="text/css" href="../js/easyui.css">
-	<link rel="stylesheet" type="text/css" href="../js/icon.css">
+	<link rel="stylesheet" type="text/css" href="../css/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../css/icon.css">
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
 	<script type="text/javascript">
 		$(function(){
-			alert("d");
-			
-			$.post("base/cusField/getCusFieldPage",{"page":1,"rows":10},function(result){
-				
-			})
-		})
+			$.post("../../cusField/getCusFieldPage",{"page":1,"rows":10},function(result){
+			});
+		});
 	</script>
 </head>
 <body>
