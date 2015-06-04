@@ -15,7 +15,7 @@ public class CusFieldDao extends BaseDao implements ICusFieldDao{
 		Integer page=MapUtils.getInteger(params,"paage",0);
 		Integer rows=MapUtils.getInteger(params,"rows",10);
 		Long entId=MapUtils.getLong(params,"entId",0l);
-		String tableName=MapUtils.getString(params,"");
+		String tableName=MapUtils.getString(params,"tableName","customer");
 		Map<String,Object> resMap=new HashMap<String, Object>();
 		String sql="select * from cusField where entId=? and tableName=? limit ?,?";
 		String countSql="select count(1) from cusField where entId=? and tableName=?";

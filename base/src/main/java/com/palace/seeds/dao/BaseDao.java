@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,10 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class BaseDao {
 	private JdbcTemplate jdbcTemplate;
+	
+	@Resource(name="dataSource")
 	private DataSource dataSource;
-	public void setDataSource(DataSource dataSource){
-		this.dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306","root", "111111");
-		this.jdbcTemplate=new JdbcTemplate(this.dataSource);
-	}
+ 
 	public Map<String,Object> queryForMap(String sql,Object ...args){
 		return jdbcTemplate.queryForMap(sql, args);
 	}
