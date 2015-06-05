@@ -15,10 +15,11 @@ import com.palace.seeds.service.ICusFieldService;
 @Controller
 @RequestMapping("cusField")
 public class CusFieldEndpoint {
-	@Autowired
-	private ICusFieldService  cusFieldService;
-	@RequestMapping("getCusFieldPage")
-	public @ResponseBody Map getPage(Map<String,Object> params){
-		return this.cusFieldService.getPage(params);
+ 
+	@Resource
+	private ICusFieldService cusFieldService;
+	
+	public @ResponseBody Map<String,Object> getCusFieldPage(Map<String,Object> params){
+		return cusFieldService.getPage(params);
 	}
 }

@@ -4,6 +4,5 @@ import java.util.Map;
 
 public interface ICusFieldDao {
 
-	Map getPage(Map<String, Object> params);
-
+	public Map<String,Object> getPage(Map<String,Object> params);
 }

@@ -4,6 +4,6 @@ import java.util.Map;
 
 public interface ICusFieldService {
 
-	Map getPage(Map<String, Object> params);
+	public Map getPage(Map<String, Object> params);
 
 }

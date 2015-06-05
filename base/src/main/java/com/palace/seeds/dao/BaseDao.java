@@ -13,7 +13,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
 
-public class BaseDao {
+import com.palace.seeds.helper.TableConst;
+import com.palace.seeds.helper.ConstVal;
+
+public class BaseDao implements IBaseDao{
 	private JdbcTemplate jdbcTemplate;
 	
 	@Resource(name="dataSource")
@@ -26,7 +29,28 @@ public class BaseDao {
 	public List<Map<String,Object>> queryForListMap(String sql,Object ...args){
 		return jdbcTemplate.queryForList(sql,args);
 	}
-	public Long insert(String sql,Object ...args){
+	
+	public boolean getInsertSql(Map<String,Object> params){
+		
+		StringBuilder sb=new StringBuilder();
+		sb.append("insert into ").append(TableConst.TREE).append(" (");
+		Object[] objPara=new Object[params.size()];
+		StringBuilder tmpSb=new StringBuilder(" values(");
+		int i=0;
+		for(Map.Entry<String,Object> entry: params.entrySet()){
+			sb.append(entry.getKey()).append(",");
+			tmpSb.append("?,");
+			 objPara[i]=entry.getValue();
+			 i++;
+		}
+		
+		String sql=sb.toString();
+		sql=sql.substring(0,sql.length()-1)+") "+tmpSb.toString().substring(0,tmpSb.toString().length()-1)+")";
+		params.put(TableConst.SQL, sql);
+		params.put(TableConst.SQLPARAMS,objPara);
+		return true;
+	}
+	public Long insert(String sql,Object...args){
 		Connection con=null;
 		PreparedStatement ps=null;
 		try {
@@ -46,17 +70,35 @@ public class BaseDao {
 				e.printStackTrace();
 			}
 		}
-		return null;
+		return 0l;
 	}
+	
+
 	public void save(){
 		
 	}
-	
-	
+	public Map<String,Object> findById(String tableName,String id){
+		 return findById(tableName,id,"");
+	}
+	public Map<String,Object> findById(String tableName,String id,String ...columns){
+		boolean flag=false;
+		StringBuilder sb= new StringBuilder(" select ");
+		for(int i=0;i<columns.length;i++){
+			flag=true;
+			sb.append(columns[i]).append(",");
+		}
+		String sql=sb.toString();
+		if(flag)
+			sql=sql.substring(0,sql.length()-1);
+		else{
+			sql+="* ";
+		}
+		return jdbcTemplate.queryForMap(sql+" from "+tableName+" where id="+id);
+	}
 	public Map<String,Object> getPage(String totalSql,String objSql,Object args){
 		Map<String,Object> map=new java.util.HashMap<String, Object>();
-		map.put(com.palace.seeds.util.ConstVal.Page.TOTAL,queryForLong(totalSql,args));
-		map.put(com.palace.seeds.util.ConstVal.Page.ROWS,queryForListMap(objSql, args));
+		map.put(ConstVal.TOTAL,queryForLong(totalSql,args));
+		map.put(ConstVal.ROWS,queryForListMap(objSql, args));
 		return map;
 	}
 	
@@ -78,7 +120,7 @@ public class BaseDao {
 					throw new RuntimeException("返回的列个数为："+resMetaData.getColumnCount());
 				}
 				Object obj = JdbcUtils.getResultSetValue(rs,1,returnType);
-				return (T) obj;
+				return (T) obj;//注意null 没有和条件匹配的结果等。
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -93,8 +135,18 @@ public class BaseDao {
 		return null;
 	}
 	
-	public void fillArgs(PreparedStatement ps,Object ...args){
-			if(com.palace.seeds.util.ConstVal.Sql.SHOWSQL)
+	
+	
+	public Integer update(String tableName,String sql,String condition){
+		StringBuilder sb=new StringBuilder();
+		sb.append("update ").append(tableName).append(" set ").append(sql).append(" where ").append(condition);
+		return jdbcTemplate.update(sb.toString());
+	}
+	
+	
+	
+	private void fillArgs(PreparedStatement ps,Object ...args){
+			if(TableConst.SHOWSQL)
 				fillArgs(ps, args);
 			
 			try {
@@ -106,7 +158,7 @@ public class BaseDao {
 			}
 	}
 	
-	public void showSql(String sql,Object...args){
+	private void showSql(String sql,Object...args){
 		for(int i=0;i<args.length;i++){
 			sql+=sql+"===para"+i+":"+args[i]+"***";
 		}

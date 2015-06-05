@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 public class CusFieldDao extends BaseDao implements ICusFieldDao{
 
 	public Map getPage(Map<String, Object> params) {
-		 
 		Integer page=MapUtils.getInteger(params,"paage",0);
 		Integer rows=MapUtils.getInteger(params,"rows",10);
 		Long entId=MapUtils.getLong(params,"entId",0l);
@@ -26,6 +25,7 @@ public class CusFieldDao extends BaseDao implements ICusFieldDao{
 		resMap.put("total",total);
 		return  resMap;
 	}
+ 
 	
 }
 
