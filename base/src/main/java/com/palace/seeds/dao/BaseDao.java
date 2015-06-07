@@ -14,14 +14,15 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
 
 import com.palace.seeds.helper.TableConst;
-import com.palace.seeds.helper.ConstVal;
 
 public class BaseDao implements IBaseDao{
-	private JdbcTemplate jdbcTemplate;
 	
 	@Resource(name="dataSource")
 	private DataSource dataSource;
- 
+	@Resource(name="jdbcTemplate")
+	private JdbcTemplate jdbcTemplate;
+	
+	 
 	public Map<String,Object> queryForMap(String sql,Object ...args){
 		return jdbcTemplate.queryForMap(sql, args);
 	}
@@ -54,7 +55,9 @@ public class BaseDao implements IBaseDao{
 		Connection con=null;
 		PreparedStatement ps=null;
 		try {
-			con = jdbcTemplate.getDataSource().getConnection();
+			if(TableConst.SHOWSQL)
+				showSql(sql,args);
+			con = dataSource.getConnection();
 			ps= con.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 			fillArgs(ps, args);
 			if(ps.execute()){
@@ -65,7 +68,7 @@ public class BaseDao implements IBaseDao{
 		}finally{
 			try {
 				ps.close();
-				DataSourceUtils.releaseConnection(con, jdbcTemplate.getDataSource());
+				DataSourceUtils.releaseConnection(con, dataSource);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -93,14 +96,16 @@ public class BaseDao implements IBaseDao{
 		else{
 			sql+="* ";
 		}
+		if(TableConst.SHOWSQL)
+			showSql(sql+" from "+tableName+" where id="+id, "");
 		return jdbcTemplate.queryForMap(sql+" from "+tableName+" where id="+id);
 	}
-	public Map<String,Object> getPage(String totalSql,String objSql,Object args){
+/*	public Map<String,Object> getPage(String totalSql,String objSql,Object ...args){
 		Map<String,Object> map=new java.util.HashMap<String, Object>();
 		map.put(ConstVal.TOTAL,queryForLong(totalSql,args));
 		map.put(ConstVal.ROWS,queryForListMap(objSql, args));
 		return map;
-	}
+	}*/
 	
 	 public Long queryForLong(String sql,Object ...args){
 		 return queryForObj(sql,Long.class, args);
@@ -108,18 +113,22 @@ public class BaseDao implements IBaseDao{
 	
 	public <T> T queryForObj(String sql,Class<T> returnType , Object ...args){
 		
-		Connection con = DataSourceUtils.getConnection(jdbcTemplate.getDataSource());
+		Connection con = DataSourceUtils.getConnection(dataSource);
 		PreparedStatement ps=null;
 		try {
+			if(TableConst.SHOWSQL)
+				showSql(sql, args);
 			ps = con.prepareStatement(sql);
 			fillArgs(ps, args);
 			if(ps.execute()){
 				java.sql.ResultSet rs = ps.getResultSet(); 
 				ResultSetMetaData resMetaData = rs.getMetaData();
-				if (resMetaData.getColumnCount() != 1) {
+				if (resMetaData.getColumnCount() > 1) {
 					throw new RuntimeException("返回的列个数为："+resMetaData.getColumnCount());
 				}
-				Object obj = JdbcUtils.getResultSetValue(rs,1,returnType);
+				Object obj=null;
+				while(rs.next())
+					obj= JdbcUtils.getResultSetValue(rs,1,returnType);
 				return (T) obj;//注意null 没有和条件匹配的结果等。
 			}
 		} catch (SQLException e) {
@@ -127,7 +136,7 @@ public class BaseDao implements IBaseDao{
 		}finally{
 			try {
 				ps.close();
-				DataSourceUtils.releaseConnection(con, jdbcTemplate.getDataSource());
+				DataSourceUtils.releaseConnection(con, dataSource);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -140,15 +149,14 @@ public class BaseDao implements IBaseDao{
 	public Integer update(String tableName,String sql,String condition){
 		StringBuilder sb=new StringBuilder();
 		sb.append("update ").append(tableName).append(" set ").append(sql).append(" where ").append(condition);
+		if(TableConst.SHOWSQL)
+			showSql(sb.toString(),"");
 		return jdbcTemplate.update(sb.toString());
 	}
 	
 	
 	
 	private void fillArgs(PreparedStatement ps,Object ...args){
-			if(TableConst.SHOWSQL)
-				fillArgs(ps, args);
-			
 			try {
 				for(int i=0;i<args.length;i++){
 					ps.setObject(i+1,args[i]);
@@ -160,7 +168,7 @@ public class BaseDao implements IBaseDao{
 	
 	private void showSql(String sql,Object...args){
 		for(int i=0;i<args.length;i++){
-			sql+=sql+"===para"+i+":"+args[i]+"***";
+			sql=sql+"**para"+i+":"+args[i];
 		}
 		System.out.println(sql);
 	}

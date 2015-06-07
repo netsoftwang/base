@@ -1,11 +1,16 @@
 package com.palace.seeds.endpoint;
 
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletRequest;
 
+import org.apache.coyote.http11.Http11AprProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,7 +24,13 @@ public class CusFieldEndpoint {
 	@Resource
 	private ICusFieldService cusFieldService;
 	
-	public @ResponseBody Map<String,Object> getCusFieldPage(Map<String,Object> params){
+	@RequestMapping("getCusFieldPage")
+	public @ResponseBody Map<String,Object> getCusFieldPage(ServletRequest req){
+		Map<String,Object> params=new HashMap<String, Object>();
+		Enumeration<String> enumVal= req.getParameterNames();
+		while(enumVal.hasMoreElements()){
+			params.put(enumVal.nextElement(),req.getParameter(enumVal.nextElement()));
+		}
 		return cusFieldService.getPage(params);
 	}
 }

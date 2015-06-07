@@ -11,7 +11,7 @@ public interface IBaseDao {
 	public void save();
 	public Map<String,Object> findById(String tableName,String id);
 	public Map<String,Object> findById(String tableName,String id,String ...columns);
-	public Map<String,Object> getPage(String totalSql,String objSql,Object args);
+	//public Map<String,Object> getPage(String totalSql,String objSql,Object args);
 	public Long queryForLong(String sql,Object ...args);
 	public <T> T queryForObj(String sql,Class<T> returnType , Object ...args);
 	public Integer update(String tableName,String sql,String condition);
